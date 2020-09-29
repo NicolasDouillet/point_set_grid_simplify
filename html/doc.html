@@ -1,0 +1,179 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>point_set_grid_simplify</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-09-29"><meta name="DC.source" content="doc.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>point_set_grid_simplify</h1><!--introduction--><p>Function to grid simplify a point set.</p><p>Author &amp; support : nicolas.douillet (at) free.fr, 2019-2020.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">See also</a></li><li><a href="#4">Input arguments</a></li><li><a href="#5">Output arguments</a></li><li><a href="#6">Example</a></li></ul></div><h2 id="1">Syntax</h2><p>V_out = point_set_grid_simplify(V_in, grid_step);</p><p>V_out = point_set_grid_simplify(V_in, grid_step, version);</p><h2 id="2">Description</h2><p>V_out = point_set_grid_simplify(V_in, grid_step) simplifies the input point set V_in through the 3D cubic grid of step grid_step and return the result V_out.</p><p>V_out = point_set_grid_simplify(V_in, grid_step, version) follows version option *'exact'/'rounded' for the simplification process.</p><p>In the exact version, every vertex of V_out also belong to V_in set : for each cell of the grid the closest to the cell centre is kept,</p><p>whereas rounded version is an approximation (for each cell of the grid, the corresponding vertex cluster is replaced with the cell centre) though sometimes usefull because very fast.</p><h2 id="3">See also</h2><p><a href="https://fr.mathworks.com/matlabcentral/fileexchange/73661-point-set-random-simplify">point_set_random_simplify</a> | <a href="https://fr.mathworks.com/help/matlab/ref/colon.html?s_tid=srchtitle">colon</a> | <a href="https://fr.mathworks.com/help/matlab/ref/linspace.html">linspace</a></p><h2 id="4">Input arguments</h2><pre>         [ |  |  |]
+- V_in = [Vx Vy Vz], real matrix double, the input point set, size(V_in) = [nb_vertices_in,3].
+         [ |  |  |]</pre><p>- grid_step : positive integer scalar double, the step of the grid.</p><p>- version : character string in the set {*'exact','rounded'}. Case insensitive.</p><h2 id="5">Output arguments</h2><pre>          [ |  |  |]
+- V_out = [Vx Vy Vz], real matrix double, the output point set, size(V_out) = [nb_vertices_out,3].
+          [ |  |  |]</pre><h2 id="6">Example</h2><p>Unit ball sampling</p><pre class="codeinput">N = 1e4;
+X = 2*(rand(N,1)-0.5);
+Y = 2*(rand(N,1)-0.5);
+Z = 2*(rand(N,1)-0.5);
+
+Rho = X.^2 + Y.^2 + Z.^2;
+i = Rho &lt;= 1;
+X = X(i);
+Y = Y(i);
+Z = Z(i);
+
+M = [X, Y, Z];
+grid_step = 0.2;
+N = point_set_grid_simplify(M, grid_step);
+
+figure;
+subplot(121);
+plot3(X,Y,Z,<span class="string">'.'</span>,<span class="string">'Color'</span>,[0 0 1],<span class="string">'Linewidth'</span>,2), hold <span class="string">on</span>;
+axis <span class="string">equal</span>, view(2);
+title({<span class="string">'Input raw point set'</span>,cat(2,num2str(size(M,1)),<span class="string">' vertices'</span>)});
+
+subplot(122);
+plot3(N(:,1), N(:,2), N(:,3),<span class="string">'.'</span>,<span class="string">'Color'</span>,[0 0 1],<span class="string">'Linewidth'</span>,2), hold <span class="string">on</span>;
+axis <span class="string">equal</span>, view(2);
+title({<span class="string">'Output grid sampled point set'</span>,cat(2,<span class="string">'grid step = '</span>, num2str(grid_step),<span class="string">' ; '</span>,num2str(size(N,1)),<span class="string">' vertices'</span>)});
+</pre><img vspace="5" hspace="5" src="doc_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% point_set_grid_simplify
+%
+% Function to grid simplify a point set.
+%
+% Author & support : nicolas.douillet (at) free.fr, 2019-2020.
+%
+%% Syntax
+%
+% V_out = point_set_grid_simplify(V_in, grid_step);
+%
+% V_out = point_set_grid_simplify(V_in, grid_step, version);
+%
+%% Description
+%
+% V_out = point_set_grid_simplify(V_in, grid_step) simplifies the input
+% point set V_in through the 3D cubic grid of step grid_step and return
+% the result V_out.
+%
+% V_out = point_set_grid_simplify(V_in, grid_step, version) follows version option
+% *'exact'/'rounded' for the simplification process.
+%
+% In the exact version, every vertex of V_out also belong to V_in set : for each cell of the grid
+% the closest to the cell centre is kept,
+%
+% whereas rounded version is an approximation (for each cell of the grid, the corresponding vertex cluster is
+% replaced with the cell centre) though sometimes usefull because very fast.
+%
+%% See also
+%
+% <https://fr.mathworks.com/matlabcentral/fileexchange/73661-point-set-random-simplify point_set_random_simplify> |
+% <https://fr.mathworks.com/help/matlab/ref/colon.html?s_tid=srchtitle colon> |
+% <https://fr.mathworks.com/help/matlab/ref/linspace.html linspace>
+%
+%% Input arguments
+%
+%           [ |  |  |]
+% - V_in = [Vx Vy Vz], real matrix double, the input point set, size(V_in) = [nb_vertices_in,3].
+%           [ |  |  |]
+%
+% - grid_step : positive integer scalar double, the step of the grid.
+%
+% - version : character string in the set {*'exact','rounded'}. Case insensitive.
+%
+%% Output arguments
+%
+%            [ |  |  |]
+% - V_out = [Vx Vy Vz], real matrix double, the output point set, size(V_out) = [nb_vertices_out,3].
+%            [ |  |  |]
+%
+%% Example
+% 
+% Unit ball sampling
+%
+N = 1e4;
+X = 2*(rand(N,1)-0.5);
+Y = 2*(rand(N,1)-0.5);
+Z = 2*(rand(N,1)-0.5);
+
+Rho = X.^2 + Y.^2 + Z.^2;
+i = Rho <= 1;
+X = X(i);
+Y = Y(i);
+Z = Z(i);
+
+M = [X, Y, Z];
+grid_step = 0.2;
+N = point_set_grid_simplify(M, grid_step);
+
+figure;
+subplot(121);
+plot3(X,Y,Z,'.','Color',[0 0 1],'Linewidth',2), hold on;
+axis equal, view(2);
+title({'Input raw point set',cat(2,num2str(size(M,1)),' vertices')});
+
+subplot(122);
+plot3(N(:,1), N(:,2), N(:,3),'.','Color',[0 0 1],'Linewidth',2), hold on;
+axis equal, view(2);
+title({'Output grid sampled point set',cat(2,'grid step = ', num2str(grid_step),' ; ',num2str(size(N,1)),' vertices')});
+##### SOURCE END #####
+--></body></html>
